@@ -42,9 +42,9 @@ public class Producto {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+    // public void setCodigo(String codigo) {
+    // this.codigo = codigo;
+    // }
 
     public int getCantidadStock() {
         return cantidadStock;
@@ -73,6 +73,34 @@ public class Producto {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public double calcularPrecioFinal() {
+        return precioBase + (precioBase * 1.19);
+    }
+
+    public boolean hayStock(int cantidad) {
+
+        if (cantidadStock >= cantidad && activo) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    public void vender(int cantidad){
+        if (hayStock(cantidad)){
+            cantidadStock -= cantidad;
+            System.out.println("Venta exitosa: " +cantidad + "unidades de " + nombre);
+        } else{
+            System.out.println("Error: Stock insuficiente");
+        }
+    }
+
+    public double calcularDescuento() {
+        return 0.0;
     }
 
 }
