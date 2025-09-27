@@ -43,6 +43,9 @@ public class ProductoAlimenticio extends Producto {
         this.diasParaVencer = diasParaVencer;
     }
 
+
+    //Métodos concretos
+
     public double calcularPrecioAlimenticio() {
         Double precioConIVA = super.calcularPrecioFinal();
         if (this.refrigerado == true) {
