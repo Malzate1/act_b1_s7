@@ -18,6 +18,8 @@ public class Producto {
         this.activo = true;
     }
 
+    //Getters y setters
+
     public String getNombre() {
         return nombre;
     }
@@ -83,6 +85,9 @@ public class Producto {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+
+    // Métodos concretos y su respectiva lógica de negocio
 
     public double calcularPrecioFinal() {
         return precioBase + (precioBase * 1.19);

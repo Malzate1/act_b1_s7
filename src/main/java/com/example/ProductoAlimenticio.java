@@ -1,20 +1,108 @@
 package com.example;
 
-public class ProductoAlimenticio extends  Producto {
+public class ProductoAlimenticio extends Producto {
 
-    private int garantiaMeses;
-    private String marca;
-    private double voltaje;
-    private boolean esImportado;
+    private boolean refrigerado;
+    private String lote;
+    private int diasParaVencer;
 
+    public ProductoAlimenticio(boolean refrigerado, String lote, int diasParaVencer, String nombre, double precioBase,
+            String codigo, int cantidadStock, String categoria) {
 
-    public ProductoAlimenticio(String nombre,double precioBase, String codigo, int cantidadStock, String categoria,int garantiaMeses,String marca,double voltaje,boolean esImportado){
         super(nombre, precioBase, codigo, cantidadStock, categoria);
-        this.garantiaMeses=garantiaMeses;
-        this.marca=marca;
-        this.voltaje=voltaje;
-        this.esImportado=esImportado;
+        this.refrigerado = refrigerado;
+        this.lote = lote;
+        this.diasParaVencer = diasParaVencer;
+
+    }
+    // Getters
+
+    public boolean isRefrigerado() {
+        return refrigerado;
     }
 
+    public String getLote() {
+        return lote;
+    }
+
+    public int getDiasParaVencer() {
+        return diasParaVencer;
+    }
+
+    // Setters
+
+    public void setRefrigerado(boolean refrigerado) {
+        this.refrigerado = refrigerado;
+    }
+
+    public void setLote(String lote) {
+        this.lote = lote;
+    }
+
+    public void setDiasParaVencer(int diasParaVencer) {
+        this.diasParaVencer = diasParaVencer;
+    }
+
+    public double calcularPrecioAlimenticio() {
+        Double precioConIVA = super.calcularPrecioFinal();
+        if (this.refrigerado == true) {
+            precioConIVA = precioConIVA * 1.08;
+        }
+        Double descuento = calcularDescuentoVencimiento();
+        precioConIVA = precioConIVA - (precioConIVA * descuento);
+        return precioConIVA;
+    }
+
+    public double calcularDescuentoVencimiento() {
+        if (diasParaVencer <= 3) {
+            return 0.50;
+        } else if (diasParaVencer <= 7) {
+            return 0.30;
+        } else if (diasParaVencer <= 15) {
+            return 0.15;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public boolean estaProximoAVencer() {
+        if (diasParaVencer <= 7) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean estaVencido() {
+        if (diasParaVencer <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String obtenerEstadoFrescura() {
+        if (estaVencido() == true) {
+            return "VENCIDO";
+        } else {
+            if (diasParaVencer <= 3) {
+                return "URGENTE";
+            } else if (diasParaVencer <= 7) {
+                return "PRÓXIMO A VENCER";
+            } else if (diasParaVencer <= 15) {
+                return "CONSUMIR PRONTO";
+            } else {
+                return "FRESCO";
+            }
+        }
+    }
+
+    public double calcularPerdidaPorVencimiento() {
+        if (estaVencido() == true) {
+            return getPrecioBase() * getCantidadStock();
+        } else {
+            return 0.0;
+        }
+    }
 
 }
