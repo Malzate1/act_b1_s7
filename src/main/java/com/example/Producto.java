@@ -15,6 +15,7 @@ public class Producto {
         this.codigo = codigo;
         this.cantidadStock = cantidadStock;
         this.categoria = categoria;
+        this.activo = true;
     }
 
     public String getNombre() {
@@ -42,9 +43,17 @@ public class Producto {
         return codigo;
     }
 
-    // public void setCodigo(String codigo) {
-    // this.codigo = codigo;
-    // }
+    public void setCodigo(String codigo) {
+
+        if (codigo != null && codigo.matches("PROD-\\d{4}")) {
+            // \\d{4}: \\d representa un dígito (0-9). {4} indica que debe aparecer
+            // exactamente cuatro veces. La doble barra invertida \\ es necesaria porque la
+            // barra simple \ es un carácter de escape en Java.
+            this.codigo = codigo;
+        } else {
+            System.out.println("Error: El código no cumple con el formato 'PROD-XXXX'.");
+        }
+    }
 
     public int getCantidadStock() {
         return cantidadStock;
@@ -89,13 +98,22 @@ public class Producto {
 
     }
 
+    public void vender(int cantidad) {
 
-    public void vender(int cantidad){
-        if (hayStock(cantidad)){
+        if (hayStock(cantidad)) {
             cantidadStock -= cantidad;
-            System.out.println("Venta exitosa: " +cantidad + "unidades de " + nombre);
-        } else{
+            System.out.println("Venta exitosa: " + cantidad + "unidades de " + nombre);
+        } else {
             System.out.println("Error: Stock insuficiente");
+        }
+    }
+
+    public void reabastecer(int cantidad) {
+        if (cantidad > 0) {
+            cantidadStock = cantidadStock + cantidad;
+            System.out.println("Reabastecimiento exitoso: " + cantidad + " unidades de " + nombre);
+        } else {
+            System.out.println("Error. La cantidad a reabastecer debe ser mayor a cero.");
         }
     }
 
