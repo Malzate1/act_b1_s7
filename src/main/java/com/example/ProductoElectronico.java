@@ -16,6 +16,8 @@ public class ProductoElectronico extends Producto {
         this.esImportado = esImportado;
     }
 
+    
+
     // Getters
     public int getGarantiaMeses() {
         return garantiaMeses;
